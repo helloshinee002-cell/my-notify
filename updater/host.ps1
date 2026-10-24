@@ -32,7 +32,9 @@ $msg = [Text.Encoding]::UTF8.GetString((Read-Exactly $len)) | ConvertFrom-Json
 try {
   switch ($msg.cmd) {
     'update' {
-      $out = & git -C $root pull --ff-only 2>&1 | Out-String
+      # Through cmd, not "& git ... 2>&1": PS 5.1 turns git's normal stderr progress ("From https://...")
+      # into an error record, which with ErrorActionPreference=Stop throws mid-pull.
+      $out = cmd /c "git -C `"$root`" pull --ff-only 2>&1" | Out-String
       Send @{ ok = ($LASTEXITCODE -eq 0); output = $out.Trim() }
     }
     'open' {
