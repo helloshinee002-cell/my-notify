@@ -73,15 +73,15 @@ points at the clone). It does two jobs:
 - Some shows are still "ไม่พบใน Bilibili". When the user sends a pair of links, fix the matcher.
 
 ## Things on the user's PC that are NOT in this repo
-`bilibili-dark/` (separate extension), `ytdlp-server/` (local download server), `mobile/`
-(`pack.ps1`, `.pem` signing keys, Android guide) and the workstation `CLAUDE.md`/`AGENTS.md`.
-If a task needs them, ask the user.
+`bilibili-dark/` and `ytdlp-server/` are in the **private repo `B-Y-Utility`** (with its own
+`HANDOFF.md`), together with the workstation `CLAUDE.md`/`AGENTS.md`. The `.pem` signing keys in
+`mobile/` exist only on the user's PC (git-ignored).
 
 ---
 
 # Reference: detailed notes (copied from the workstation CLAUDE.md, 2026-10-24)
 
-Paths like `gojo-notify/…` below mean this repo's root. Mentions of `mobile/`, the
+Paths like `gojo-notify/…` below mean this repo's root. Mentions of the
 `git-push-github` skill and `gh` path quirks are about the user's Windows workstation.
 
 ## Ad blocking — now part of `gojo-notify/` (was `disable-ads-by-web/`)
@@ -108,12 +108,17 @@ target is **Edge Canary**: Settings → About → tap the build 5× → Develope
 "Extension install by crx". **Quetta** is a maybe (`quetta://extensions`, if it has Load
 unpacked). `mobile/README-android.md` is the user guide, in Thai.
 
-- `mobile/pack.ps1` stages a clean copy (drops `_metadata/`) and packs it with desktop Edge
-  (`msedge --pack-extension`, scratch `--user-data-dir`). It writes `.crx` + `.zip` into
-  `mobile/`. It packs `gojo-notify/` by default (`-Name <folder>` for another), signed with `gojo-notify.pem` (same rule: keep it, never ship it). The phone .crx is low priority: the user mainly uses Windows.
-- `mobile/disable-ads-by-web.pem` is the old extension's signing key, kept from before the merge. **Keep it, and never ship it.** It
-  pins the extension ID `njpebncddjkamhjkghfjjigofnkocedh`, so a new .crx installs as an
-  update. Lose it and the next pack gets a new ID.
+- `mobile/` lives **inside this repo** (since 2026-10-24); `pack.ps1`, `README-android.md` are committed,
+  the `.pem`/`.crx`/`.zip` are git-ignored and stay only on the user's PC.
+- **The phone build is ad-blocking only** (the user only uses that on the phone). `mobile\pack.ps1`
+  (default) stages just the ad files and writes a **manifest derived from the real one**: name "Disable
+  Ads by Web", same `version`, `permissions: [declarativeNetRequest]`, the ad hosts only (drops
+  tenrai/bilibili/biliintl/github), no background/action/popup, and the gojo content-script entry
+  reduced to `css: [hide.css]`. It signs with `disable-ads-by-web.pem`, which pins the old phone
+  install's ID `njpebncddjkamhjkghfjjigofnkocedh`, so it installs as an update. `-Full` packs the
+  whole extension as `gojo-notify.crx` (key `gojo-notify.pem`). **Keep both .pem files, never ship
+  them**; lose one and the next pack gets a new ID. Both use `msedge --pack-extension` with a
+  scratch `--user-data-dir`.
 - PS 5.1 `Start-Process` doesn't quote array args, and the paths contain a space, so
   pack.ps1 quotes them by hand.
 
