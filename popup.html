@@ -23,6 +23,11 @@
   .empty { padding: 16px 10px; color: #888; }
   #update { padding: 8px 10px; background: #1b3a1f; color: #c8e6c9; font-size: 12px; border-bottom: 1px solid #2e7d32; }
   #update a { color: #81c784; }
+  #update .acts { display: flex; gap: 6px; margin-top: 6px; }
+  #update .acts button { font: inherit; color: #fff; background: #2e7d32; border: 0; border-radius: 5px; padding: 5px 10px; cursor: pointer; }
+  #update .acts button + button { background: #37474f; }
+  #update .acts button:disabled { opacity: .6; cursor: default; }
+  #update .msg:not(:empty) { margin-top: 6px; color: #fff59d; }
   li .bili { flex: none; font-size: 11px; color: #4fc3f7; text-decoration: none; white-space: nowrap; }
   li .bili.none { color: #777; }
   li.day { display: block; padding: 8px 10px 2px; font-weight: 700; color: #ff8a80; border-top: 1px solid #2a2a2a; }

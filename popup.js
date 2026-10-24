@@ -53,8 +53,13 @@ async function render() {
   // new version on GitHub (bg.js checkUpdate): update.bat pulls it, then reload the card
   const up = $("update");
   up.hidden = !store.update;
-  if (store.update) up.replaceChildren("มีเวอร์ชันใหม่ v" + store.update.version + " — ดับเบิลคลิก update.bat แล้วกด reload การ์ดใน edge://extensions ",
-    el("a", { href: "https://github.com/helloshinee002-cell/my-notify/commits/main", target: "_blank", rel: "noopener", textContent: "(ดูว่ามีอะไรใหม่)" }));
+  if (store.update) {
+    const msg = el("div", { className: "msg" });
+    up.replaceChildren("มีเวอร์ชันใหม่ v" + store.update.version + " ",
+      el("a", { href: "https://github.com/helloshinee002-cell/my-notify/commits/main", target: "_blank", rel: "noopener", textContent: "(ดูว่ามีอะไรใหม่)" }),
+      el("div", { className: "acts" }, updaterButton("อัปเดตเลย", "update", msg), updaterButton("เปิดโฟลเดอร์", "open", msg)),
+      msg);
+  }
   const followed = Object.entries(follows).map(([id, f]) => ({ id, title: f.title, ep: f.lastEp, img: f.img, dates: f.dates }));
   const list = $("list");
   if (tab === "days") return renderDays(list, followed, origin, follows);
@@ -67,7 +72,33 @@ async function render() {
   }
 }
 
-const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+// Talks to updater/host.bat (native messaging, set up once per PC by install-updater.bat):
+// "update" = git pull in the extension folder, then reload the extension; "open" = Explorer.
+function updaterButton(label, cmd, msg) {
+  const b = el("button", { type: "button", textContent: label });
+  b.addEventListener("click", async () => {
+    b.disabled = true;
+    msg.textContent = cmd === "update" ? "กำลังอัปเดต…" : "";
+    let r;
+    try {
+      r = await chrome.runtime.sendNativeMessage("com.mynotify.updater", { cmd });
+    } catch {
+      msg.textContent = "ยังไม่ได้ติดตั้งตัวช่วยอัปเดตในเครื่องนี้: ดับเบิลคลิก install-updater.bat ในโฟลเดอร์ extension ครั้งเดียว แล้ว reload การ์ด";
+      b.disabled = false;
+      return;
+    }
+    if (!r?.ok) {
+      msg.textContent = "ไม่สำเร็จ: " + (r?.output || "ไม่ทราบสาเหตุ");
+      b.disabled = false;
+      return;
+    }
+    if (cmd === "update") chrome.runtime.reload(); // loads the pulled code; the popup closes
+    else b.disabled = false;
+  });
+  return b;
+}
+
+const DAYS =["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
 
 // followed shows grouped by the weekday they usually update on, starting from today
 function renderDays(list, followed, origin, follows) {
