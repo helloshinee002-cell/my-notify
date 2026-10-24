@@ -1,0 +1,17 @@
+/* The few Bootstrap bits fairyanime's own dark mode missed (still white).
+   Scoped to body:not(.light-mode) so the site's ☀️ light mode stays untouched. */
+body:not(.light-mode) .pager li > a,
+body:not(.light-mode) .pager li > span,
+body:not(.light-mode) .nav-tabs > li.active > a,
+body:not(.light-mode) .nav-tabs > li.active > a:hover,
+body:not(.light-mode) .nav-tabs > li.active > a:focus,
+body:not(.light-mode) .breadcrumb > li > a,
+body:not(.light-mode) .badge-light {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: #ddd !important;
+}
+
+body:not(.light-mode) .pager .disabled > a {
+  color: #666 !important;
+}

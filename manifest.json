@@ -1,0 +1,140 @@
+{
+  "manifest_version": 3,
+  "name": "Gojo Notify",
+  "version": "2.0",
+  "description": "แจ้งเตือนตอนใหม่ของอนิเมะที่ติดตามบน animegojos.com, คะแนน MyAnimeList, ลิงก์ลิขสิทธิ์ Bilibili และปิดโฆษณาบน animegojo, fairyanime, hubserieshds และ 037-hdd",
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://animegojos.com/*",
+    "https://animegojoo.com/*",
+    "https://api.tenrai.org/*",
+    "https://api.bilibili.tv/*",
+    "https://app.biliintl.com/*",
+    "https://fairyanime.net/*",
+    "https://streaming.tonytonychopper.com/*",
+    "https://player.marimo.me/*",
+    "https://hubserieshds.com/*",
+    "https://www.037-hdd.com/*",
+    "https://playlist.streamhls1688.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
+  "background": {
+    "service_worker": "bg.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://animegojos.com/*",
+        "https://animegojoo.com/*"
+      ],
+      "js": [
+        "parse.js",
+        "follow.js",
+        "mal.js"
+      ],
+      "css": [
+        "follow.css",
+        "mal.css",
+        "hide.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://fairyanime.net/*"
+      ],
+      "css": [
+        "fairyanime.css",
+        "fairyanime-dark.css"
+      ],
+      "js": [
+        "fairyanime-dark.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://abysscdn.com/*",
+        "https://playhydrax.com/*"
+      ],
+      "all_frames": true,
+      "css": [
+        "abysscdn.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://hubserieshds.com/*"
+      ],
+      "css": [
+        "hubseries.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://nanoplayer.zip/video/*",
+        "https://anccplayer.cyou/source/*"
+      ],
+      "js": [
+        "nanoplayer-noads.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.037-hdd.com/*"
+      ],
+      "css": [
+        "037hdd.css"
+      ],
+      "js": [
+        "037hdd-player.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://playlist.streamhls1688.com/*"
+      ],
+      "js": [
+        "streamhls-noads.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://playlist.streamhls1688.com/*"
+      ],
+      "css": [
+        "streamhls.css"
+      ],
+      "all_frames": true,
+      "js": [
+        "streamhls-seek.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ads",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

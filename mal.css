@@ -1,0 +1,20 @@
+.mal-score {
+  font: 700 11px/1 "Segoe UI", system-ui, sans-serif; color: #111; background: #bdbdbd;
+  border-radius: 4px; padding: 3px 5px; cursor: pointer; white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+.mal-score.hi { background: #66bb6a; }
+.mal-score.mid { background: #ffca28; }
+.mal-score:focus-visible { outline: 2px solid #4a9eff; outline-offset: 1px; }
+/* on covers: bottom-left, the one corner the site's own labels don't use */
+.card-thumb > .mal-score { position: absolute; left: 4px; bottom: 4px; z-index: 2; }
+/* on the series page, next to the follow button */
+.mal-slot .mal-score { display: inline-block; font-size: 14px; padding: 7px 10px; margin: 8px 8px; vertical-align: middle; }
+/* bilibili licensed link / not-found status, next to the MAL badge on the series page */
+.bili-link {
+  display: inline-block; font: 600 14px/1 "Segoe UI", system-ui, sans-serif; color: #fff; background: #00a1d6;
+  border-radius: 6px; padding: 8px 12px; margin: 8px 0; text-decoration: none; vertical-align: middle;
+}
+.bili-link:hover { filter: brightness(1.1); }
+.bili-link.none { color: #bbb; background: #333; }
+.bili-link:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }

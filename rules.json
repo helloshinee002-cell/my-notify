@@ -1,0 +1,515 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "/bframe.php",
+      "resourceTypes": [
+        "sub_frame",
+        "xmlhttprequest"
+      ],
+      "requestDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||dtscout.com^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "sub_frame",
+        "image",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||dtscdn.com^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "sub_frame",
+        "image",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||mrktmtrcs.net^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "sub_frame",
+        "image",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||crwdcntrl.net^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "sub_frame",
+        "image",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||histats.com^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "sub_frame",
+        "image",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||googletagmanager.com^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "sub_frame",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||cloudflareinsights.com^",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "/banner/",
+      "initiatorDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ],
+      "resourceTypes": [
+        "image"
+      ],
+      "requestDomains": [
+        "animegojoo.com",
+        "animegojos.com"
+      ]
+    }
+  },
+  {
+    "id": 101,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://streaming.tonytonychopper.com/playback/v/\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https://streaming\\.tonytonychopper\\.com/playback/f/(.*)$",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "sub_frame"
+      ]
+    }
+  },
+  {
+    "id": 102,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||streaming.tonytonychopper.com/ads/",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 103,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||banner.tonytonychopper.com^",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  },
+  {
+    "id": 104,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||cdend.com^",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  },
+  {
+    "id": 105,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||premiumvertising.com^",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "script",
+        "stylesheet"
+      ]
+    }
+  },
+  {
+    "id": 106,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||d2j042cj1421wi.cloudfront.net^",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "script"
+      ]
+    }
+  },
+  {
+    "id": 107,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||googletagmanager.com^",
+      "initiatorDomains": [
+        "fairyanime.net"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 108,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||whos.amung.us^",
+      "initiatorDomains": [
+        "tonytonychopper.com",
+        "tonytonychopper.net"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  },
+  {
+    "id": 109,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "responseHeaders": [
+        {
+          "header": "content-security-policy",
+          "operation": "set",
+          "value": "script-src 'self'"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||player.marimo.me/demo/",
+      "resourceTypes": [
+        "sub_frame"
+      ]
+    }
+  },
+  {
+    "id": 110,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "blockadsnot.com",
+        "dnhfi5nn2dt67.cloudfront.net",
+        "ddrsemxv.com",
+        "qvorcqfon.com"
+      ],
+      "initiatorDomains": [
+        "marimo.me"
+      ],
+      "resourceTypes": [
+        "script"
+      ]
+    }
+  },
+  {
+    "id": 201,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||hubserieshds.com/bframe.php",
+      "initiatorDomains": [
+        "hubserieshds.com"
+      ],
+      "resourceTypes": [
+        "sub_frame",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 202,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||hubserieshds.com/banner/",
+      "initiatorDomains": [
+        "hubserieshds.com"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  },
+  {
+    "id": 203,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||histats.com^",
+      "initiatorDomains": [
+        "hubserieshds.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "image",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 204,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||googletagmanager.com^",
+      "initiatorDomains": [
+        "hubserieshds.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 301,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||www.037-hdd.com/ads/",
+      "initiatorDomains": [
+        "037-hdd.com"
+      ],
+      "resourceTypes": [
+        "xmlhttprequest"
+      ]
+    }
+  },
+  {
+    "id": 302,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||image.cdend.com^",
+      "initiatorDomains": [
+        "037-hdd.com"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  },
+  {
+    "id": 303,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "googletagmanager.com",
+        "google-analytics.com"
+      ],
+      "initiatorDomains": [
+        "037-hdd.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest",
+        "image",
+        "ping"
+      ]
+    }
+  },
+  {
+    "id": 304,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||googles.video^",
+      "initiatorDomains": [
+        "streamhls1688.com"
+      ],
+      "resourceTypes": [
+        "media",
+        "xmlhttprequest",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 305,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||pixel.morphify.net^",
+      "initiatorDomains": [
+        "streamhls1688.com",
+        "playhydrax.com"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  }
+]

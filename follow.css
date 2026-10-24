@@ -1,0 +1,7 @@
+.gojo-follow {
+  font: 600 14px/1 "Segoe UI", system-ui, sans-serif; color: #fff; background: #e53935;
+  border: 0; border-radius: 6px; padding: 8px 14px; margin: 8px 0; cursor: pointer;
+}
+.gojo-follow:hover { filter: brightness(1.1); }
+.gojo-follow.on { background: #2e7d32; }
+.gojo-follow:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }

@@ -1,0 +1,14 @@
+/* hubserieshds.com: same platform as animegojoo. Collapse the ad boxes left behind
+   once rules.json 201-202 block the bframes and /banner/ images. #bt-ads and
+   #bt-ads-mini are position:fixed z-index:1001, so empty ones still cover the page.
+
+   Do NOT hide #refresh, #video or #pvpick, which are the player. The pre-roll ads
+   inside it are removed by nanoplayer-noads.js, not by CSS. */
+#banner,
+.bannerrow,
+.bframe,
+#bt-ads,
+#bt-ads-mini,
+#bt-ads-mini2 {
+  display: none !important;
+}

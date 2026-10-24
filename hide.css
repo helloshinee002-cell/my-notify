@@ -1,0 +1,15 @@
+/* Collapse the ad boxes so blocking the requests doesn't leave holes.
+   #bt-ads is the important one — it's position:fixed z-index:1001 pinned to the
+   bottom of the viewport, so an empty one still covers the page.
+
+   Do NOT add #refresh here. Despite the name it is the video player itself
+   (<iframe name="player" title="วิดีโอ"> inside div.player-wrap); it just sits
+   on /e404.html until you pick an episode. Hiding it blanks the player. */
+.ad-container,
+.bframe,
+.bframe-row,   /* gambling banner rows above/below the player (added 2026-10) */
+.bannerrow,
+#bt-ads,
+#btads-frame {
+  display: none !important;
+}

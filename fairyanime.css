@@ -1,0 +1,13 @@
+/* Collapse the banner boxes left behind once their images are blocked — the
+   floating/catfish ones are position:fixed, so an empty box still covers the page.
+
+   Do NOT touch #video_player, .tab-content or iframe#frame — that's the player.
+   The pre-roll ads inside it are skipped by rules.json #1 (playback/f -> playback/v),
+   not by CSS. */
+#floating-banner-container,
+#floating-banner-container-left,
+#catfish-master-container,
+#kosana,
+div:has(> a > img.kosana-banner) {
+  display: none !important;
+}

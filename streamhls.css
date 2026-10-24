@@ -1,0 +1,8 @@
+/* Backup for streamhls-noads.js: the ad-gate's full-stage click-catcher (window.open to a
+   gambling link), its "สมัครสมาชิก" button and image popup. Never hide #adgate-content:
+   that's the iframe holding the real player. */
+#adgate-ad-click,
+#adgate-cta,
+#adgate-popup {
+  display: none !important;
+}

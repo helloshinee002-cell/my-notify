@@ -1,0 +1,8 @@
+/* abysscdn.com is the video frame fairyanime ends up in (via player.marimo.me).
+   #overlay is a transparent click-catcher over the player: each click opens an ad tab,
+   and it only removes itself after 2 pop-ups. If pop-ups fail it swaps the player for
+   an "AdBlock detected" message. Hiding it sends the click straight to jwplayer, so
+   that code never runs. Blocking the ad domain instead would still open empty tabs. */
+#overlay {
+  display: none !important;
+}
