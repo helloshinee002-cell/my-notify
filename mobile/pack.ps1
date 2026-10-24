@@ -5,7 +5,7 @@
 # Bilibili links, popup, updater) and keeps the old "Disable Ads by Web" name and signing key,
 # so it installs over the copy already on the phone.
 #
-# <name>.pem is the signing key (git-ignored). KEEP IT and never ship it: the same key keeps the
+# ..\..\keys\<name>.pem is the signing key (outside the repo). KEEP IT and never ship it: the same key keeps the
 # same extension ID, so the phone treats a new .crx as an update instead of a second copy.
 # Keep this file ASCII-only: Windows PowerShell 5.1 reads a BOM-less script as ANSI.
 param([switch]$Full)
@@ -15,7 +15,11 @@ $src  = Split-Path $here                      # the extension (repo root)
 $name = if ($Full) { 'gojo-notify' } else { 'disable-ads-by-web' }
 $stage = Join-Path $env:TEMP $name             # the .crx is named after this folder
 $packProfile = Join-Path $env:TEMP 'dabw-pack-profile'   # keeps the user's Edge profile untouched
-$pem  = Join-Path $here "$name.pem"
+# Keys live OUTSIDE the extension folder (in a "keys" folder next to it): Edge scans every file of
+# an unpacked extension and warns "This extension includes the key file ..." if a .pem is inside.
+$keys = Join-Path (Split-Path $src) 'keys'
+New-Item -ItemType Directory $keys -Force | Out-Null
+$pem  = Join-Path $keys "$name.pem"
 $edge = (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths\msedge.exe').'(default)'
 
 Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue

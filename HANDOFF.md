@@ -109,7 +109,9 @@ target is **Edge Canary**: Settings → About → tap the build 5× → Develope
 unpacked). `mobile/README-android.md` is the user guide, in Thai.
 
 - `mobile/` lives **inside this repo** (since 2026-10-24); `pack.ps1`, `README-android.md` are committed,
-  the `.pem`/`.crx`/`.zip` are git-ignored and stay only on the user's PC.
+  the `.crx`/`.zip` outputs are git-ignored. **The `.pem` keys live in `keys/` next to the extension folder
+  (`Modify Windows/keys/`), never inside it**: Edge scans an unpacked extension and warns "This extension
+  includes the key file …" if a `.pem` is in the folder (the user hit this on 2026-10-25 after `mobile/` moved in).
 - **The phone build is ad-blocking only** (the user only uses that on the phone). `mobile\pack.ps1`
   (default) stages just the ad files and writes a **manifest derived from the real one**: name "Disable
   Ads by Web", same `version`, `permissions: [declarativeNetRequest]`, the ad hosts only (drops
