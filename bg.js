@@ -164,7 +164,9 @@ async function backfillBili(follows) {
 
 // New version on GitHub? Checked at most once a day from the 30-min alarm. The repo is public,
 // so the raw manifest needs no token. Updating itself is update.bat (git pull) + reload.
-const REPO_MANIFEST = "https://raw.githubusercontent.com/helloshinee002-cell/my-notify/main/manifest.json";
+// The contents API, not raw.githubusercontent.com: the raw CDN caches 5 min and ignores ?query
+// busting, so a check right after a push saw the old version. API: max-age 60, 60 req/h per IP.
+const REPO_MANIFEST = "https://api.github.com/repos/helloshinee002-cell/my-notify/contents/manifest.json?ref=main";
 // "1.10" > "1.9": compare numerically, part by part
 const newer = (a, b) => {
   const x = String(a).split(".").map(Number), y = String(b).split(".").map(Number);
@@ -172,10 +174,10 @@ const newer = (a, b) => {
   return false;
 };
 
-async function checkUpdate() {
+async function checkUpdate(force = false) {
   const { updateCheckedAt = 0 } = await get("updateCheckedAt");
-  if (Date.now() - updateCheckedAt < 864e5) return;
-  const r = await fetch(REPO_MANIFEST, { credentials: "omit", cache: "no-store" });
+  if (!force && Date.now() - updateCheckedAt < 864e5) return;
+  const r = await fetch(REPO_MANIFEST, { credentials: "omit", cache: "no-store", headers: { Accept: "application/vnd.github.raw+json" } });
   if (!r.ok) return;
   const latest = (await r.json()).version;
   const mine = chrome.runtime.getManifest().version;
@@ -198,7 +200,9 @@ chrome.alarms.onAlarm.addListener((a) => {
 chrome.runtime.onMessage.addListener((msg, _s, reply) => {
   if (msg?.mal) malLookup(msg.mal.id, msg.mal.q).then(reply);
   if (msg?.bili) biliLookup(msg.bili.id, msg.bili.name).then(reply);
-  if (msg === "check") check().then((n) => reply({ ok: true, n }), (e) => reply({ ok: false, err: String(e) }));
+  // the popup's "เช็กตอนนี้": new episodes and, ignoring the once-a-day limit, a new version
+  if (msg === "check") Promise.all([check(), checkUpdate(true).catch(() => {})])
+    .then(([n]) => reply({ ok: true, n }), (e) => reply({ ok: false, err: String(e) }));
   if (msg === "seen") chrome.storage.local.set({ unseen: [] }).then(() => { badge(0); reply({ ok: true }); });
   return true;
 });
