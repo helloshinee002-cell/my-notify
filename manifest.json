@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gojo Notify",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "แจ้งเตือนตอนใหม่ของอนิเมะที่ติดตามบน animegojos.com, คะแนน MyAnimeList, ลิงก์ลิขสิทธิ์ Bilibili และปิดโฆษณาบน animegojo, fairyanime, hubserieshds, 037-hdd และ 24-hdc",
   "permissions": [
     "alarms",
@@ -162,6 +162,11 @@
         "id": "ads",
         "enabled": true,
         "path": "rules.json"
+      },
+      {
+        "id": "24hdc-p2p",
+        "enabled": false,
+        "path": "rules-24hdc-p2p.json"
       }
     ]
   }

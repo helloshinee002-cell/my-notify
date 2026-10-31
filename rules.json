@@ -513,6 +513,28 @@
     }
   },
   {
+    "id": 306,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "connatix.com"
+      ],
+      "initiatorDomains": [
+        "streamhls1688.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest",
+        "image",
+        "sub_frame",
+        "ping"
+      ]
+    }
+  },
+  {
     "id": 401,
     "priority": 1,
     "action": {

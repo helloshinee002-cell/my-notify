@@ -28,7 +28,7 @@ points at the clone). It does two jobs:
 1. **Bump `version` in `manifest.json` and push to `main`** for any change to the extension itself
    (docs-only commits like this file skip the bump, so users get no empty update). Other PCs only see an update when
    GitHub's version is higher. Use dotted numbers, e.g. 2.1.6, compared numerically by `newer()`
-   in `bg.js`. The next real change is **2.1.7**; 2.0.1, 2.1.1, 2.1.3 and 2.1.5 were update-flow
+   in `bg.js`. The next real change is **2.1.8**; 2.0.1, 2.1.1, 2.1.3 and 2.1.5 were update-flow
    tests that only changed the version.
 2. Commit as the account's noreply address, never a personal email:
    `git config user.name helloshinee002-cell` and
@@ -226,6 +226,12 @@ Mapped by two read-only swarm workers, 2026-10-17.
   **The server still enforces ~12 s:** `/playback` answers `425 AD_GATE_NOT_READY`
   until 12 s after the session, and the player retries by itself. That wait can't be
   removed. Rule 304 (`googles.video`) is a fallback.
+- **Ad-tech sync (rule 306, 2026-10-31):** the player loads `cd.connatix.com/identity.js` and `cds.connatix.com/p/…/cnx_usync.js`,
+  then `capi.connatix.com/core/sync` fires cookie-sync requests to 30+ ad companies (Criteo, PubMatic, Rubicon, adnxs, …) and leaves
+  IDs in localStorage (`id5id*`, `cnx_*`). jwplayer has `advertising: false`, so playback shouldn't need it. Rule 306 blocks
+  `connatix.com` at the source, so no per-company list is needed. **Not testable outside the user's Edge** (the test browser can't load
+  DNR, and the scripts load too early to simulate). If 037 ever stops playing, remove rule 306 first. The player also loads p2p-media-loader;
+  its script is obfuscated, so whether P2P is active there is unconfirmed.
 - **Never block:**
   - `/?streamhls_ticket`
   - streamhls `/embed`, `/api/player/*`, `/player/source`, `/sources`, `/static/js`
@@ -266,11 +272,16 @@ so **expect another domain hop**: add the new host to `host_permissions`, the `m
   The bar goes after `#halim-player-wrapper`, **not inside**: that box has a fixed height, so a bar inside overflows under
   the language/part selects. The iframe is looked up at click time because the server buttons replace it, and theater mode
   turns itself off if its iframe disappears. -5/+5 is `streamhls-seek.js` on `main.24playerhd.com` (all_frames).
+- **P2P (rule 403, built but OFF by the user's decision, 2026-10-31):** the player runs p2p-media-loader with `consumeOnly: false`
+  and `cachedSegmentsCount: 300` (50 on mobile), so it **uploads video to other viewers** and exposes the IP to them. Trackers:
+  `wss://t1–t4.24playerhd.com`. The block lives in its own ruleset `rules-24hdc-p2p.json`, listed in the manifest with
+  `"enabled": false`. **To turn it on: set `enabled: true` and bump the version.** Simulated with the tracker WebSocket failing
+  (`wss://t3…`): the movie keeps playing, segments come over HTTP from `www.work26092026.online`.
 - **Not tested:** `new_player.php` answers "Error 32177" / shows black outside the user's browser, and it gates on how it's
   loaded. Don't try to get past that check (spoofed headers were refused by the harness). The user checks it in Edge.
   Same host, so the same CSS and seek script apply if it has the same markup.
 
-## `gojo-notify/` — "Gojo Notify" (MV3 v2.1.6)
+## `gojo-notify/` — "Gojo Notify" (MV3 v2.1.7)
 
 Also holds the ad blocker (see "Ad blocking" above). Repo, update flow: the GitHub bullet below.
 

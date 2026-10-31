@@ -1,0 +1,23 @@
+[
+  {
+    "id": 403,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "t1.24playerhd.com",
+        "t2.24playerhd.com",
+        "t3.24playerhd.com",
+        "t4.24playerhd.com"
+      ],
+      "initiatorDomains": [
+        "24playerhd.com"
+      ],
+      "resourceTypes": [
+        "websocket"
+      ]
+    }
+  }
+]
