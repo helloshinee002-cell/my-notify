@@ -28,7 +28,7 @@ points at the clone). It does two jobs:
 1. **Bump `version` in `manifest.json` and push to `main`** for any change to the extension itself
    (docs-only commits like this file skip the bump, so users get no empty update). Other PCs only see an update when
    GitHub's version is higher. Use dotted numbers, e.g. 2.1.6, compared numerically by `newer()`
-   in `bg.js`. The next real change is **2.1.8**; 2.0.1, 2.1.1, 2.1.3 and 2.1.5 were update-flow
+   in `bg.js`. The next real change is **2.1.9**; 2.0.1, 2.1.1, 2.1.3 and 2.1.5 were update-flow
    tests that only changed the version.
 2. Commit as the account's noreply address, never a personal email:
    `git config user.name helloshinee002-cell` and
@@ -243,6 +243,13 @@ Mapped by two read-only swarm workers, 2026-10-17.
   - `#wrap {z-index:5}` makes a stacking context that traps the fixed player under the page. While theater is on, the script adds `.t037-lift` (`z-index:auto`) to every stacking ancestor. Esc, T or the button toggles it off.
   - The in-app test browser can't do real fullscreen at all (`requestFullscreen()` never settles), so the F button can only be checked in the user's Edge.
 - **-5 / +5 buttons** (`streamhls-seek.js`, isolated world, all_frames on streamhls) sit in the jwplayer control bar after "Rewind 10 Seconds", so they work in fullscreen too. They set `video.currentTime` directly (hls.js plays through the `<video>`), with no need for the page's `jwplayer` object. A MutationObserver re-adds them if jwplayer rebuilds the bar.
+- **Resolution label + quality menu** (`quality.js`, v2.1.8; MAIN world, all_frames, on streamhls and 24playerhd, because the API is on the page's
+  `jwplayer`). A control-bar button shows the real decoded height (`video.videoHeight`), e.g. "1080p" or "Auto · 1080p", and opens a menu of
+  `getQualityLevels()` → `setCurrentQuality(i)`. **It can only offer what the source has**: sampled 24-hdc movie = Auto/360p/1080p (no 720p), sampled
+  037 movie = 720p only, so there it's just a label. The menu is appended inside `.jwplayer`, not `<body>`, so it survives jwplayer's own fullscreen.
+  - **Gotcha:** a switch only shows after the already-buffered video plays out (about 2 minutes seen on 24-hdc), and `getCurrentQuality()` keeps reporting the old
+    level until then. So the script remembers `chosen` and shows "1080p → 360p" until `videoHeight` matches. Seeking past the buffer lands it at once.
+  - In tests, target `.jwplayer > [role=menu]`: jwplayer has its own hidden `[role=menu]` lists.
 - `streamhls1688` has a number in its name, so expect a domain hop. Read the base64
   `target=` on the post page's `iframe#player` to find the new host.
 
@@ -281,7 +288,7 @@ so **expect another domain hop**: add the new host to `host_permissions`, the `m
   loaded. Don't try to get past that check (spoofed headers were refused by the harness). The user checks it in Edge.
   Same host, so the same CSS and seek script apply if it has the same markup.
 
-## `gojo-notify/` — "Gojo Notify" (MV3 v2.1.7)
+## `gojo-notify/` — "Gojo Notify" (MV3 v2.1.8)
 
 Also holds the ad blocker (see "Ad blocking" above). Repo, update flow: the GitHub bullet below.
 

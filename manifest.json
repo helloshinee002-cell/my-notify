@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gojo Notify",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "แจ้งเตือนตอนใหม่ของอนิเมะที่ติดตามบน animegojos.com, คะแนน MyAnimeList, ลิงก์ลิขสิทธิ์ Bilibili และปิดโฆษณาบน animegojo, fairyanime, hubserieshds, 037-hdd และ 24-hdc",
   "permissions": [
     "alarms",
@@ -154,6 +154,18 @@
       "js": [
         "streamhls-seek.js"
       ]
+    },
+    {
+      "matches": [
+        "https://playlist.streamhls1688.com/*",
+        "https://main.24playerhd.com/*"
+      ],
+      "js": [
+        "quality.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_idle",
+      "all_frames": true
     }
   ],
   "declarative_net_request": {
