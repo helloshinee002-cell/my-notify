@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Gojo Notify",
-  "version": "2.1.5",
-  "description": "แจ้งเตือนตอนใหม่ของอนิเมะที่ติดตามบน animegojos.com, คะแนน MyAnimeList, ลิงก์ลิขสิทธิ์ Bilibili และปิดโฆษณาบน animegojo, fairyanime, hubserieshds และ 037-hdd",
+  "version": "2.1.6",
+  "description": "แจ้งเตือนตอนใหม่ของอนิเมะที่ติดตามบน animegojos.com, คะแนน MyAnimeList, ลิงก์ลิขสิทธิ์ Bilibili และปิดโฆษณาบน animegojo, fairyanime, hubserieshds, 037-hdd และ 24-hdc",
   "permissions": [
     "alarms",
     "notifications",
@@ -22,7 +22,9 @@
     "https://hubserieshds.com/*",
     "https://www.037-hdd.com/*",
     "https://playlist.streamhls1688.com/*",
-    "https://api.github.com/*"
+    "https://api.github.com/*",
+    "https://www.24-hdc.com/*",
+    "https://main.24playerhd.com/*"
   ],
   "background": {
     "service_worker": "bg.js"
@@ -99,10 +101,11 @@
         "https://www.037-hdd.com/*"
       ],
       "css": [
-        "037hdd.css"
+        "037hdd.css",
+        "theater.css"
       ],
       "js": [
-        "037hdd-player.js"
+        "player-bar.js"
       ]
     },
     {
@@ -124,6 +127,30 @@
         "streamhls.css"
       ],
       "all_frames": true,
+      "js": [
+        "streamhls-seek.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.24-hdc.com/*"
+      ],
+      "css": [
+        "24hdc.css",
+        "theater.css"
+      ],
+      "js": [
+        "player-bar.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://main.24playerhd.com/*"
+      ],
+      "all_frames": true,
+      "css": [
+        "24playerhd.css"
+      ],
       "js": [
         "streamhls-seek.js"
       ]

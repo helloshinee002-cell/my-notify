@@ -1,0 +1,16 @@
+/* 24-hdc.com: every banner is a first-party .gif inside <a href="/link_to.php?url=...">.
+   Rule 401 stops the images; this collapses the boxes they sit in.
+
+   Never hide by these:
+   - .adlf / section.adlf: holds the real category menu ("หมวดหมู่ ...")
+   - .adcen: also wraps real layout, so its .adb child is hidden instead
+   - #yout: the sticky trailer player, not an ad */
+aside.ad,
+.adt,
+.adrg,
+.adhl,
+.adl,
+.adb,
+a[href*="link_to.php"] {
+  display: none !important;
+}

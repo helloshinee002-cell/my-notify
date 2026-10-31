@@ -46,7 +46,7 @@ if ($Full) {
     manifest_version = 3
     name = 'Disable Ads by Web'
     version = $manifest.version
-    description = 'Blocks gambling banners, popunders and pre-roll ads on animegojo, fairyanime, hubserieshds and 037-hdd.'
+    description = 'Blocks gambling banners, popunders and pre-roll ads on animegojo, fairyanime, hubserieshds, 037-hdd and 24-hdc.'
     icons = $manifest.icons
     permissions = @('declarativeNetRequest')
     host_permissions = @($manifest.host_permissions | Where-Object { $gojoHosts -notcontains $_ })

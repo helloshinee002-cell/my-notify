@@ -18,31 +18,3 @@
 #banner-left {
   display: none !important;
 }
-
-/* ---- player buttons + theater mode (037hdd-player.js) ---- */
-.t037-bar { display: flex; gap: 8px; justify-content: flex-end; padding: 6px 0; }
-.t037-bar button {
-  font: 600 13px/1 "Segoe UI", system-ui, sans-serif; color: #eee; background: #222;
-  border: 1px solid #444; border-radius: 6px; padding: 7px 12px; cursor: pointer;
-}
-.t037-bar button:hover { background: #333; }
-.t037-bar button:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
-
-/* The player is pulled out of the page into a centered 16:9 box, as large as fits in
-   95% of the window. The dark backdrop is a huge shadow on the iframe itself, not a
-   separate layer, so it can never end up above the player. .t037-lift (set by the
-   script on the iframe's ancestors) drops stacking contexts like #wrap {z-index:5}
-   that would otherwise trap the player under the page header. */
-html.t037-theater { overflow: hidden; }
-html.t037-theater .t037-lift { z-index: auto !important; transform: none !important; filter: none !important; }
-iframe.t037-active {
-  position: fixed !important; z-index: 2147483000 !important;
-  left: 50% !important; top: 50% !important; transform: translate(-50%, -50%);
-  width: min(95vw, 95vh * 16 / 9) !important; height: min(95vh, 95vw * 9 / 16) !important;
-  max-width: none !important; max-height: none !important; background: #000;
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .92);
-}
-/* the active player's bar floats in the top-right corner so it can be turned off */
-html.t037-theater iframe.t037-active + .t037-bar {
-  position: fixed; top: 10px; right: 16px; z-index: 2147483001; padding: 0;
-}

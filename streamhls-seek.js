@@ -1,4 +1,4 @@
-// "-5" / "+5" buttons in the streamhls jwplayer control bar (after its "Rewind 10 Seconds"),
+// "-5" / "+5" buttons in the jwplayer control bar on streamhls (037-hdd) and 24playerhd (24-hdc) (after its "Rewind 10 Seconds"),
 // so they also show in fullscreen and theater mode. They seek the <video> directly (hls.js
 // plays through it), which needs no access to the page's jwplayer object.
 (() => {

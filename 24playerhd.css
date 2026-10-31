@@ -1,0 +1,7 @@
+/* main.24playerhd.com: #ad-overlay covers the player until its X is pressed, and that X opens an
+   ad tab. If the tab is blocked the X sets window.isPois, and the player then stops the movie at
+   5 minutes. So hide the box instead of pressing it: the flag is only set inside the X handler,
+   and the player's own resume prompt checks the computed display, so it carries on normally. */
+#ad-overlay {
+  display: none !important;
+}

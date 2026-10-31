@@ -22,13 +22,13 @@ points at the clone). It does two jobs:
    - MyAnimeList score badges;
    - a licensed-Bilibili link.
 2. **Ad blocking**, formerly a separate "Disable Ads by Web" extension, merged in at v2.0:
-   animegojo, fairyanime, hubserieshds and 037-hdd, via `declarativeNetRequest` + per-site CSS/JS.
+   animegojo, fairyanime, hubserieshds, 037-hdd and 24-hdc, via `declarativeNetRequest` + per-site CSS/JS.
 
 ## Rules for every change
 1. **Bump `version` in `manifest.json` and push to `main`** for any change to the extension itself
    (docs-only commits like this file skip the bump, so users get no empty update). Other PCs only see an update when
    GitHub's version is higher. Use dotted numbers, e.g. 2.1.6, compared numerically by `newer()`
-   in `bg.js`. The next real change is **2.1.6**; 2.0.1, 2.1.1, 2.1.3 and 2.1.5 were update-flow
+   in `bg.js`. The next real change is **2.1.7**; 2.0.1, 2.1.1, 2.1.3 and 2.1.5 were update-flow
    tests that only changed the version.
 2. Commit as the account's noreply address, never a personal email:
    `git config user.name helloshinee002-cell` and
@@ -88,11 +88,11 @@ Paths like `gojo-notify/…` below mean this repo's root. Mentions of the
 
 **2026-10-24: `disable-ads-by-web/` was merged into `gojo-notify/`** (v2.0), and the old folder
 was deleted. Every file below (`rules.json`, `hide.css`, `fairyanime*`, `abysscdn.css`,
-`hubseries.css`, `nanoplayer-noads.js`, `037hdd*`, `streamhls-*`) now lives in `gojo-notify/`.
+`hubseries.css`, `nanoplayer-noads.js`, `037hdd.css`, `player-bar.js`, `theater.css`, `streamhls-*`, `24hdc.css`, `24playerhd.css`) now lives in `gojo-notify/`.
 The DNR rules and content-script entries are unchanged. The only difference is that `hide.css`
 joined gojo's single content-script entry (`parse.js` must load once per page). It's still a
 per-site ad/tracker blocker: `declarativeNetRequest` + per-site CSS, with JS only where noted.
-Covers `animegojoo.com`, `fairyanime.net`, `hubserieshds.com` and `037-hdd.com`. After
+Covers `animegojoo.com`, `fairyanime.net`, `hubserieshds.com`, `037-hdd.com` and `24-hdc.com`. After
 editing, **reload** the Gojo Notify card.
 
 **Rule: every new site to de-ad goes INTO `gojo-notify/` — never a new folder.**
@@ -204,7 +204,7 @@ boxes, and **`#refresh` is the player iframe (never hide it)**.
 - `nanoplayer.zip` shows a Cloudflare bot check to automated browsers, so the
   player can only be tested in the user's own Edge.
 
-### 037-hdd.com (ids 301–399, `037hdd.css`, `streamhls-noads.js`, `streamhls.css`)
+### 037-hdd.com (ids 301–399, `037hdd.css`, `theater.css`, `streamhls-noads.js`, `streamhls.css`)
 
 Mapped by two read-only swarm workers, 2026-10-17.
 
@@ -231,7 +231,7 @@ Mapped by two read-only swarm workers, 2026-10-17.
   - streamhls `/embed`, `/api/player/*`, `/player/source`, `/sources`, `/static/js`
   - `content.jwplatform.com`, `cdn.jsdelivr.net`, `hls.steamhls*.com`
   - **`*-ad-site-sign-sg.tiktokcdn.com`: that's the real video**, despite "ad-site" in the name
-- **Player buttons** (`037hdd-player.js`, on the post page): "โรงหนัง (T)" and "เต็มจอ (F)" under each player iframe. Matched by `iframe#player, iframe[src*="streamhls_ticket"]`: older posts (e.g. 2021 Godzilla) have no `id`.
+- **Player buttons** (`player-bar.js` + `theater.css`, on the post page): "โรงหนัง (T)" and "เต็มจอ (F)" under each player iframe. Matched by `iframe#player, iframe[src*="streamhls_ticket"]`: older posts (e.g. 2021 Godzilla) have no `id`.
   - **The site's jwplayer fullscreen is broken.** jwplayer sets `jw-flag-fullscreen` / `getFullscreen()=true`, but no frame ever gets a `fullscreenElement`, even though every iframe has `allow="fullscreen"` and no header restricts it. So "เต็มจอ" calls `requestFullscreen()` on the outer iframe from the top page, which doesn't depend on the nested frames.
   - **Theater** pins the iframe `position:fixed` and centered, at `min(95vw, 95vh·16/9)`. The backdrop is a `box-shadow: 0 0 0 100vmax` on the iframe itself.
   - `#wrap {z-index:5}` makes a stacking context that traps the fixed player under the page. While theater is on, the script adds `.t037-lift` (`z-index:auto`) to every stacking ancestor. Esc, T or the button toggles it off.
@@ -240,7 +240,37 @@ Mapped by two read-only swarm workers, 2026-10-17.
 - `streamhls1688` has a number in its name, so expect a domain hop. Read the base64
   `target=` on the post page's `iframe#player` to find the new host.
 
-## `gojo-notify/` — "Gojo Notify" (MV3 v2.1.4)
+### 24-hdc.com (ids 401–499, `24hdc.css`, `24playerhd.css`, `player-bar.js`, `theater.css`)
+
+Added 2026-10-31 (v2.1.6), same treatment as 037-hdd. The site's own banner says it hopped from 24-hda.com,
+so **expect another domain hop**: add the new host to `host_permissions`, the `matches` and the rules'
+`initiatorDomains`/`requestDomains`.
+
+- **Page ads, all one kind:** first-party gambling GIFs at `/wp-content/uploads/…/*.gif`, each inside
+  `<a href="/link_to.php?url=…">`. Every `.gif` on the page is an ad (0 outside link_to links), so rule 401
+  blocks them by path. Rule 402 blocks GTM, GA and CF insights. `24hdc.css` collapses `aside.ad`, `.adt`,
+  `.adrg`, `.adhl`, `.adl`, `.adb` and `a[href*="link_to.php"]`.
+- **Never hide or block:**
+  - `.adlf` / `section.adlf`: holds the **real category menu**;
+  - `.adcen`: also wraps real layout (its `.adb` child is what gets hidden);
+  - `#yout`: the sticky trailer player;
+  - `api.24-hdc.com/get.php`: **the player loader**.
+- **Player:** WordPress halim theme. `#halim-player-wrapper` > `#ajax-player` > `iframe.embed-responsive-item` (no `id`).
+  The three server buttons swap the iframe by AJAX: "เก่า" = `main.24playerhd.com/index_th.php`,
+  "ใหม่"/"สำรอง" = `new_player.php?id=…&b=…`.
+- **Pre-roll overlay:** `#ad-overlay` in the player frame. Its ✕ opens `ads.php` in a new tab and waits 3 s; if the popup
+  was blocked it sets `window.isPois = true`, and `player.on("time")` then stops the movie at 300 s. The flag is set
+  **only inside the ✕ handler**, so `24playerhd.css` hiding the box (never pressing ✕) avoids it. Tested: plays,
+  `isPois` stays undefined, and the resume prompt takes its normal branch because it checks computed display.
+- **Buttons:** `player-bar.js` (was `037hdd-player.js`, now serves both sites) and `theater.css` (split out of `037hdd.css`).
+  The bar goes after `#halim-player-wrapper`, **not inside**: that box has a fixed height, so a bar inside overflows under
+  the language/part selects. The iframe is looked up at click time because the server buttons replace it, and theater mode
+  turns itself off if its iframe disappears. -5/+5 is `streamhls-seek.js` on `main.24playerhd.com` (all_frames).
+- **Not tested:** `new_player.php` answers "Error 32177" / shows black outside the user's browser, and it gates on how it's
+  loaded. Don't try to get past that check (spoofed headers were refused by the harness). The user checks it in Edge.
+  Same host, so the same CSS and seek script apply if it has the same markup.
+
+## `gojo-notify/` — "Gojo Notify" (MV3 v2.1.6)
 
 Also holds the ad blocker (see "Ad blocking" above). Repo, update flow: the GitHub bullet below.
 

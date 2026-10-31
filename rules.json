@@ -511,5 +511,49 @@
         "image"
       ]
     }
+  },
+  {
+    "id": 401,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "/wp-content/uploads/*.gif",
+      "requestDomains": [
+        "24-hdc.com"
+      ],
+      "initiatorDomains": [
+        "www.24-hdc.com",
+        "24-hdc.com"
+      ],
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  },
+  {
+    "id": 402,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "googletagmanager.com",
+        "google-analytics.com",
+        "static.cloudflareinsights.com"
+      ],
+      "initiatorDomains": [
+        "www.24-hdc.com",
+        "24-hdc.com"
+      ],
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest",
+        "image",
+        "ping"
+      ]
+    }
   }
 ]
